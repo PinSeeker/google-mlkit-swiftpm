@@ -48,7 +48,6 @@ let package = Package(
         "MLKitCommon",
         "GoogleToolboxForMac",
         "GoogleUtilitiesComponents",
-        "Protobuf",
         .product(name: "GULAppDelegateSwizzler", package: "GoogleUtilities"),
         .product(name: "GULEnvironment", package: "GoogleUtilities"),
         .product(name: "GULISASwizzler", package: "GoogleUtilities"),
