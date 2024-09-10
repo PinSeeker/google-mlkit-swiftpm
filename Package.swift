@@ -42,7 +42,6 @@ let package = Package(
     .binaryTarget(
       name: "GoogleUtilitiesComponents",
       path: "GoogleMLKit/GoogleUtilitiesComponents.xcframework"),
-    .binaryTarget(name: "Protobuf", url: "https://github.com/d-date/google-mlkit-swiftpm/releases/download/3.2.0/Protobuf.xcframework.zip", checksum: "e411598ad55b7a74bdec956e67fd7e6b453fcd4267c0f7ccfdfad0952a220cbd"),
     .target(
       name: "Common",
       dependencies: [

@@ -17,19 +17,16 @@ build-cocoapods: bootstrap-cocoapods
 	-configuration Release -alltargets \
   ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=NO SYMROOT="$(SYMROOT)" \
   CLANG_ENABLE_MODULE_DEBUGGING=NO \
-  BITCODE_GENERATION_MODE=bitcode \
 	IPHONEOS_DEPLOYMENT_TARGET="$(IPHONEOS_DEPLOYMENT_TARGET)"
 	@xcodebuild -project "$(PODS_PROJECT)" \
 	-sdk iphonesimulator \
 	-configuration Release -alltargets \
   ONLY_ACTIVE_ARCH=NO ENABLE_TESTABILITY=NO SYMROOT="$(SYMROOT)" \
   CLANG_ENABLE_MODULE_DEBUGGING=NO \
-  BITCODE_GENERATION_MODE=bitcode \
 	IPHONEOS_DEPLOYMENT_TARGET="$(IPHONEOS_DEPLOYMENT_TARGET)"
 
 # copy-resource-bundle:
 # 	@cp -rf "./Pods/Pods/Build/Release-iphoneos/MLKitFaceDetection/GoogleMVFaceDetectorResources.bundle" "./Sources/FaceDetection/GoogleMVFaceDetectorResources.bundle"
-
 prepare-info-plist:
 	@cp -rf "./Resources/MLKitCommon-Info.plist" "./Pods/MLKitCommon/Frameworks/MLKitCommon.framework/Info.plist"
 	@cp -rf "./Resources/MLKitBarcodeScanning-Info.plist" "./Pods/MLKitBarcodeScanning/Frameworks/MLKitBarcodeScanning.framework/Info.plist"
@@ -46,24 +43,20 @@ create-xcframework: bootstrap-builder build-cocoapods prepare-info-plist
 		-framework Pods/Pods/Build/Release-iphonesimulator/GoogleUtilitiesComponents/GoogleUtilitiesComponents.framework \
 		-framework Pods/Pods/Build/Release-iphoneos/GoogleUtilitiesComponents/GoogleUtilitiesComponents.framework \
 		-output GoogleMLKit/GoogleUtilitiesComponents.xcframework
-	@xcodebuild -create-xcframework \
-		-framework Pods/Pods/Build/Release-iphonesimulator/Protobuf/Protobuf.framework \
-		-framework Pods/Pods/Build/Release-iphoneos/Protobuf/Protobuf.framework \
-		-output GoogleMLKit/Protobuf.xcframework
 	@xcframework-maker/.build/release/make-xcframework \
 	-ios ./Pods/MLImage/Frameworks/MLImage.framework \
-	-output GoogleMLKit
-	@xcframework-maker/.build/release/make-xcframework \
-	-ios ./Pods/MLKitBarcodeScanning/Frameworks/MLKitBarcodeScanning.framework \
 	-output GoogleMLKit
 	@xcframework-maker/.build/release/make-xcframework \
 	-ios ./Pods/MLKitCommon/Frameworks/MLKitCommon.framework \
 	-output GoogleMLKit
 	@xcframework-maker/.build/release/make-xcframework \
-	-ios ./Pods/MLKitFaceDetection/Frameworks/MLKitFaceDetection.framework \
+	-ios ./Pods/MLKitVision/Frameworks/MLKitVision.framework \
 	-output GoogleMLKit
 	@xcframework-maker/.build/release/make-xcframework \
-	-ios ./Pods/MLKitVision/Frameworks/MLKitVision.framework \
+	-ios ./Pods/MLKitBarcodeScanning/Frameworks/MLKitBarcodeScanning.framework \
+	-output GoogleMLKit
+	@xcframework-maker/.build/release/make-xcframework \
+	-ios ./Pods/MLKitFaceDetection/Frameworks/MLKitFaceDetection.framework \
 	-output GoogleMLKit
 
 archive: create-xcframework
